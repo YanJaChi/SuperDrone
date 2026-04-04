@@ -6,21 +6,19 @@ import io.github.yanjachi.superdrone.client.renderer.DroneRenderer;
 import io.github.yanjachi.superdrone.entity.ModEntity;
 import io.github.yanjachi.superdrone.item.ModCreativeTab;
 import io.github.yanjachi.superdrone.item.ModItem;
+import io.github.yanjachi.superdrone.network.ModNetwork;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
+
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
+
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
+import io.github.yanjachi.superdrone.entity.DroneEntity;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,7 +30,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import org.slf4j.Logger;
 
@@ -59,10 +56,13 @@ public class SuperDrone {
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::onEntityAttributeCreate);
 
         //初始化
         ModItem.register(modEventBus);
         ModCreativeTab.register(modEventBus);
+
+        ModNetwork.register();
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
@@ -102,6 +102,10 @@ public class SuperDrone {
     {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
+    }
+
+    private void onEntityAttributeCreate(final EntityAttributeCreationEvent event) {
+        event.put(ModEntity.DRONE.get(), DroneEntity.createAttributes().build());
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

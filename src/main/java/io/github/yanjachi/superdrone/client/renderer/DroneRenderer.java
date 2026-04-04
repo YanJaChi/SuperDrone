@@ -14,6 +14,6 @@ public class DroneRenderer extends MobRenderer<DroneEntity, PigModel<DroneEntity
 
     @Override
     public ResourceLocation getTextureLocation(DroneEntity entity) {
-        return new ResourceLocation("minecraft", "textures/entity/pig/pig.png");
+        return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/pig/pig.png");
     }
 }

@@ -19,9 +19,10 @@ public class DroneSpawnItem extends Item {
         Level level = context.getLevel();
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
-        BlockPos spawnPos = context.getClickedPos().above();
+        // 在被点击方块的“点击面外侧”生成，而不是固定 above()
+        BlockPos spawnPos = context.getClickedPos().relative(context.getClickedFace());
 
-        DroneEntity drone = ModEntity.DRONE.get().create((ServerLevel) level);
+        DroneEntity drone = ModEntity.DRONE.get().create(level);
         if (drone == null) return InteractionResult.FAIL;
 
         drone.moveTo(
@@ -31,6 +32,11 @@ public class DroneSpawnItem extends Item {
                 context.getRotation(),
                 0.0F
         );
+
+        // 可选：避免与方块重叠，检查碰撞
+        if (!level.noCollision(drone, drone.getBoundingBox())) {
+            return InteractionResult.FAIL;
+        }
 
         level.addFreshEntity(drone);
 
