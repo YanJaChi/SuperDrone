@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BGB",
+    " D ",
+    "B B"
+  ],
+  "key": {
+    "D": { "item": "superdrone:drone_core" },
+    "B": { "item": "superdrone:brashless_motor" },
+    "G": { "item": "minecraft:glass_pane" }
+  },
+  "result": {
+    "item": "superdrone:drone",
+    "count": 1
+  }
+}
