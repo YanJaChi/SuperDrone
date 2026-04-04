@@ -107,7 +107,6 @@ public class SuperDrone {
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}");
-            //aaaaaaaaaaaaa
         }
     }
 }
