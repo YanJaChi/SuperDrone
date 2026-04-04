@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IBI",
+    "RGR",
+    "IYI"
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_nugget" },
+    "B": { "item": "minecraft:lapis_lazuli" },
+    "G": { "item": "minecraft:emerald" },
+    "R": { "item": "minecraft:redstone" },
+    "Y": { "item": "minecraft:gold_ingot" }
+  },
+  "result": {
+    "item": "superdrone:gem_chip",
+    "count": 2
+  }
+}
