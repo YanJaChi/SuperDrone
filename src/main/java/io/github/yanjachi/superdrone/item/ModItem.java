@@ -1,5 +1,6 @@
 package io.github.yanjachi.superdrone.item;
 
+import io.github.yanjachi.superdrone.effects.DroneSpawnItem;
 import io.github.yanjachi.superdrone.screen.SuperDrone;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -12,13 +13,13 @@ public class ModItem {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, SuperDrone.MODID);
 
-    // 示例物品：无人机核心
+    // 这里是注册物品的地方
     public static final RegistryObject<Item> DRONE_CORE = ITEMS.register("drone_core",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> DRONE = ITEMS.register("drone",
-            () -> new Item(new Item.Properties()));
+            () -> new DroneSpawnItem(new Item.Properties().stacksTo(1).durability(300)));
     public static final RegistryObject<Item> GEM_CHIP = ITEMS.register("gem_chip",
-            () -> new Item(new Item.Properties().stacksTo(1).durability(300)));
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> BRASHLESS_MOTOR = ITEMS.register("brashless_motor",
             () -> new Item(new Item.Properties()));
 

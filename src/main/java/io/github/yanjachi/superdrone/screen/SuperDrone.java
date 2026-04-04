@@ -2,8 +2,11 @@ package io.github.yanjachi.superdrone.screen;
 
 
 import com.mojang.logging.LogUtils;
+import io.github.yanjachi.superdrone.client.renderer.DroneRenderer;
+import io.github.yanjachi.superdrone.entity.ModEntity;
 import io.github.yanjachi.superdrone.item.ModCreativeTab;
 import io.github.yanjachi.superdrone.item.ModItem;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
@@ -32,6 +35,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import org.slf4j.Logger;
+
+import static io.github.yanjachi.superdrone.entity.ModEntity.ENTITIES;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(SuperDrone.MODID)
@@ -65,6 +70,8 @@ public class SuperDrone {
         ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
+
+        ENTITIES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -107,6 +114,11 @@ public class SuperDrone {
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}");
+
+            //注册实体渲染器
+            event.enqueueWork(() -> {
+                EntityRenderers.register(ModEntity.DRONE.get(), DroneRenderer::new);
+            });
         }
     }
 }

@@ -14,6 +14,7 @@ public class ModCreativeTab {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, SuperDrone.MODID);
 
+    //这里是添加物品栏的地方
     public static final RegistryObject<CreativeModeTab> SUPERDRONE_TAB = CREATIVE_MODE_TABS.register("superdrone_tab",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("creativetab.superdrone_tab"))
