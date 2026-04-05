@@ -23,8 +23,13 @@ public class DroneClientEvents {
 
         if (mc.level != null) {
             Entity drone = mc.level.getEntity(DroneClientControl.droneId);
-            if (drone != null && mc.getCameraEntity() != drone) {
-                mc.setCameraEntity(drone);
+            if (drone != null) {
+                if (mc.getCameraEntity() != drone) {
+                    mc.setCameraEntity(drone);
+                }
+                // 新增：本地即时旋转同步，避免“只在移动时更新视角”
+                drone.setYRot(mc.player.getYRot());
+                drone.setXRot(mc.player.getXRot());
             }
         }
 
