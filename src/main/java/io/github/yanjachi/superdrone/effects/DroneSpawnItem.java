@@ -3,7 +3,6 @@ package io.github.yanjachi.superdrone.effects;
 import io.github.yanjachi.superdrone.entity.DroneEntity;
 import io.github.yanjachi.superdrone.entity.ModEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
