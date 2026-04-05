@@ -27,6 +27,13 @@ public class DroneClientControl {
         }
         controlling = false;
         droneId = -1;
+
+        // 防止按键状态残留（疯狂右键/左键）
+        if (mc.options != null) {
+            mc.options.keyUse.setDown(false);
+            mc.options.keyAttack.setDown(false);
+        }
+
         if (mc.player != null) mc.setCameraEntity(mc.player);
     }
 

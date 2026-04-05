@@ -1,19 +1,23 @@
 package io.github.yanjachi.superdrone.client.renderer;
 
+import io.github.yanjachi.superdrone.client.model.DroneModel;
 import io.github.yanjachi.superdrone.entity.DroneEntity;
-import net.minecraft.client.model.PigModel;
-import net.minecraft.client.model.geom.ModelLayers;
+import io.github.yanjachi.superdrone.screen.SuperDrone;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class DroneRenderer extends MobRenderer<DroneEntity, PigModel<DroneEntity>> {
+public class DroneRenderer extends MobRenderer<DroneEntity, DroneModel<DroneEntity>> {
+
+    private static final ResourceLocation TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(SuperDrone.MODID, "textures/entity/drone.png");
+
     public DroneRenderer(EntityRendererProvider.Context context) {
-        super(context, new PigModel<>(context.bakeLayer(ModelLayers.PIG)), 0.5f);
+        super(context, new DroneModel<>(context.bakeLayer(DroneModel.LAYER_LOCATION)), 0.3F);
     }
 
     @Override
     public ResourceLocation getTextureLocation(DroneEntity entity) {
-        return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/pig/pig.png");
+        return TEXTURE;
     }
 }

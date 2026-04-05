@@ -28,8 +28,8 @@ public class DroneEntity extends PathfinderMob {
 
     public static AttributeSupplier.Builder createAttributes() {
         return PathfinderMob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.3D);
+                .add(Attributes.MAX_HEALTH, 5.0D)
+                .add(Attributes.MOVEMENT_SPEED, 1.0D);
     }
 
     @Override
