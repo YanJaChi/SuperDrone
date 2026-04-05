@@ -10,13 +10,22 @@ public class DroneClientControl {
     public static boolean controlling = false;
     public static int droneId = -1;
 
+    // 新增：允许短暂丢失实体（区块/同步抖动），避免立刻断控
+    private static int missingTicks = 0;
+    private static final int MAX_MISSING_TICKS = 60; // 约 3 秒（20tps）
+
     public static void startControl(int id) {
         Minecraft mc = Minecraft.getInstance();
         Entity e = mc.level != null ? mc.level.getEntity(id) : null;
+        controlling = true;
+        droneId = id;
+        missingTicks = 0;
+
         if (e != null) {
-            controlling = true;
-            droneId = id;
             mc.setCameraEntity(e);
+        } else if (mc.player != null) {
+            // 先保持玩家视角，等实体同步到客户端后再切
+            mc.setCameraEntity(mc.player);
         }
     }
 
@@ -27,8 +36,8 @@ public class DroneClientControl {
         }
         controlling = false;
         droneId = -1;
+        missingTicks = 0;
 
-        // 防止按键状态残留（疯狂右键/左键）
         if (mc.options != null) {
             mc.options.keyUse.setDown(false);
             mc.options.keyAttack.setDown(false);
@@ -40,8 +49,22 @@ public class DroneClientControl {
     public static void tickSafetyCheck() {
         Minecraft mc = Minecraft.getInstance();
         if (!controlling || mc.level == null) return;
+
         Entity e = mc.level.getEntity(droneId);
-        if (e == null || !e.isAlive()) stopControl();
+
+        if (e == null || !e.isAlive()) {
+            missingTicks++;
+            if (missingTicks > MAX_MISSING_TICKS) {
+                stopControl();
+            }
+            return;
+        }
+
+        // 找回实体后重置计数，并确保镜头回到无人机
+        missingTicks = 0;
+        if (mc.getCameraEntity() != e) {
+            mc.setCameraEntity(e);
+        }
     }
 
     public static void sendInput(float forward, float strafe, boolean up, boolean down) {
@@ -49,7 +72,6 @@ public class DroneClientControl {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return;
 
-        // 只用玩家角度（稳定）
         float yaw = mc.player.getYRot();
         float pitch = mc.player.getXRot();
 

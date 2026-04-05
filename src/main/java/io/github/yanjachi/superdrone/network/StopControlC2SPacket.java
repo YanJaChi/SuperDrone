@@ -16,20 +16,26 @@ public class StopControlC2SPacket {
     public void toBytes(FriendlyByteBuf buf) {}
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ServerPlayer sp = ctx.get().getSender();
+        NetworkEvent.Context context = ctx.get();
+        ServerPlayer sp = context.getSender();
         if (sp == null) {
-            ctx.get().setPacketHandled(true);
+            context.setPacketHandled(true);
             return;
         }
 
-        ctx.get().enqueueWork(() -> {
+        context.enqueueWork(() -> {
             DroneEntity drone = DroneEntity.getControlledDrone(sp);
             if (drone != null) {
+                // 退出控制时：立即刹停并进入悬停（不下落）
+                drone.setDeltaMovement(0.0D, 0.0D, 0.0D);
+                drone.setHovering(true);
                 drone.clearController();
+                drone.hasImpulse = true;
+                drone.hurtMarked = true;
             }
             DroneEntity.stopControlling(sp);
         });
 
-        ctx.get().setPacketHandled(true);
+        context.setPacketHandled(true);
     }
 }

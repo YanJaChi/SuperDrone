@@ -16,7 +16,9 @@ public class ModEntity {
     public static final RegistryObject<EntityType<DroneEntity>> DRONE =
             ENTITIES.register("drone", () ->
                     EntityType.Builder.<DroneEntity>of(DroneEntity::new, MobCategory.CREATURE)
-                            .sized(0.9F, 0.9F) // 碰撞箱宽高，可后续调整
+                            .sized(0.9F, 0.3F) // 碰撞箱宽高，可后续调整
+                            .clientTrackingRange(700)
+                            .updateInterval(1)
                             .build("drone")
             );
 
