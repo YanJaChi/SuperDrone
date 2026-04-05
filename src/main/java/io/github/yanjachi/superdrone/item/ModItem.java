@@ -22,6 +22,8 @@ public class ModItem {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> BRASHLESS_MOTOR = ITEMS.register("brashless_motor",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> REMOTE_CONTROL = ITEMS.register("remote_control",
+            () -> new Item(new Item.Properties()));
 
     // 你后续可以继续这样加：
     // public static final RegistryObject<Item> BATTERY = ITEMS.register("battery",

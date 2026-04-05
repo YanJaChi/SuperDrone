@@ -24,6 +24,7 @@ public class ModCreativeTab {
                         output.accept(ModItem.DRONE.get());
                         output.accept(ModItem.GEM_CHIP.get());
                         output.accept(ModItem.BRASHLESS_MOTOR.get());
+                        output.accept(ModItem.REMOTE_CONTROL.get());
                         // 后续新增物品继续往这里加：
                         // output.accept(ModItems.XXX.get());
                     })

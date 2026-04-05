@@ -29,7 +29,7 @@ public class DroneEntity extends PathfinderMob {
     public static AttributeSupplier.Builder createAttributes() {
         return PathfinderMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5.0D)
-                .add(Attributes.MOVEMENT_SPEED, 1.0D);
+                .add(Attributes.MOVEMENT_SPEED, 3.0D);
     }
 
     @Override
@@ -45,6 +45,11 @@ public class DroneEntity extends PathfinderMob {
             );
         }
         return InteractionResult.sidedSuccess(this.level().isClientSide);
+    }
+
+    @Override
+    public boolean causeFallDamage(float fallDistance, float damageMultiplier, net.minecraft.world.damagesource.DamageSource source) {
+        return false; // 免疫摔落伤害
     }
 
     public boolean isControlledBy(ServerPlayer player) {
