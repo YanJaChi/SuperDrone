@@ -54,9 +54,19 @@ public class ControlInputC2SPacket {
             DroneEntity drone = DroneEntity.getControlledDrone(sp);
             if (drone == null) return;
 
-            // 同步朝向（来自客户端鼠标）
+            // 同步朝向（来自客户端镜头）
             drone.setYRot(yaw);
             drone.setXRot(pitch);
+
+            // 关键：同步头/身体朝向，避免水平视角延迟
+            drone.setYHeadRot(yaw);
+            drone.setYBodyRot(yaw);
+
+            // 可选：减少插值抖动
+            drone.yRotO = yaw;
+            drone.xRotO = pitch;
+            drone.yHeadRotO = yaw;
+            drone.yBodyRotO = yaw;
 
             // 输入归一化，避免斜向更快
             float f = forward;
