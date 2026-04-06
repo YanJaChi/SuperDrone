@@ -7,7 +7,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import io.github.yanjachi.superdrone.item.RemoteControllerItem;
 
 public class ModItem {
 
@@ -18,13 +17,15 @@ public class ModItem {
     public static final RegistryObject<Item> DRONE_CORE = ITEMS.register("drone_core",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> DRONE = ITEMS.register("drone",
-            () -> new DroneSpawnItem(new Item.Properties().stacksTo(1).durability(300)));
+            () -> new DroneSpawnItem(new Item.Properties()));
     public static final RegistryObject<Item> GEM_CHIP = ITEMS.register("gem_chip",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> BRASHLESS_MOTOR = ITEMS.register("brashless_motor",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> REMOTE_CONTROLLER = ITEMS.register("remote_controller",
             () -> new RemoteControllerItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> WRENCH = ITEMS.register("wrench",
+            () -> new Item(new Item.Properties()));
 
     // 你后续可以继续这样加：
     // public static final RegistryObject<Item> BATTERY = ITEMS.register("battery",

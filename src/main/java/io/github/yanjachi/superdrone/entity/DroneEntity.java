@@ -46,25 +46,27 @@ public class DroneEntity extends PathfinderMob {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
 
-        // 1) 手持遥控器右键无人机：绑定
-        if (!this.level().isClientSide && held.is(ModItem.REMOTE_CONTROLLER.get())) {
-            RemoteControllerItem.bindDrone(held, this.getUUID());
-            if (player instanceof ServerPlayer sp) {
-                sp.displayClientMessage(Component.literal("已绑定无人机: " + this.getUUID()), true);
-            }
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        // 只允许手持遥控器交互（绑定 + 接管）
+        if (!held.is(ModItem.REMOTE_CONTROLLER.get())) {
+            // 非遥控器（包括空手）不处理
+            return InteractionResult.PASS;
         }
 
-        // 2) 普通右键：接管控制
         if (!this.level().isClientSide && player instanceof ServerPlayer sp) {
+            // 1) 绑定到当前这台无人机
+            RemoteControllerItem.bindDrone(held, this.getUUID());
+            sp.displayClientMessage(Component.literal("已绑定并接管无人机: " + this.getUUID()), true);
+
+            // 2) 建立控制关系并开始控制
             setController(sp);
-            setHovering(false); // 接管时取消悬停，恢复飞行控制
+            setHovering(false); // 接管时取消悬停
 
             ModNetwork.CHANNEL.send(
                     PacketDistributor.PLAYER.with(() -> sp),
                     new StartControlS2CPacket(this.getId())
             );
         }
+
         return InteractionResult.sidedSuccess(this.level().isClientSide);
     }
 

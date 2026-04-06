@@ -52,7 +52,7 @@ public class RemoteControllerItem extends Item {
         }
 
         // 在附近找已绑定 UUID 的无人机（可改成全维度管理）
-        AABB box = player.getBoundingBox().inflate(1024);
+        AABB box = player.getBoundingBox().inflate(1500);
         List<DroneEntity> drones = level.getEntitiesOfClass(DroneEntity.class, box);
         DroneEntity target = null;
         for (DroneEntity d : drones) {
@@ -77,7 +77,6 @@ public class RemoteControllerItem extends Item {
                     new StartControlS2CPacket(target.getId())
             );
         }
-
         return InteractionResultHolder.success(stack);
     }
 }
